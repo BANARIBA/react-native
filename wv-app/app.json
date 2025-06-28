@@ -1,0 +1,44 @@
+{
+  "expo": {
+    "name": "wv-app",
+    "slug": "wv-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/box.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Esta aplicación necesita acceso a la cámara."
+      }
+    },
+    "android": {
+      "usesCleartextTraffic": true,
+      "useNextNotificationsApi": true,
+      "networkSecurityConfig": "./network_security_config.xml",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "CAMERA",
+        "CAMERA_ROLL"
+      ],
+      "package": "com.sancheza.wvapp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8c2babbc-6d63-43ff-b539-de18c79ca017"
+      }
+    }
+  }
+}
