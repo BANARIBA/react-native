@@ -1,58 +1,39 @@
 import { useEffect, useRef, useState } from "react";
+import type { ReqResUser } from "../interfaces/users-req-res.interface";
 import { loadUsersAction } from "../actions/load-users.action";
 
-export interface UsersResponse {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: User[];
-  support: Support;
-}
-
-export interface User {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-}
-
-export interface Support {
-  url: string;
-  text: string;
-}
-
 export const useUsers = () => {
-  
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<ReqResUser[]>([]);
   const currentPageRef = useRef(1);
 
-  useEffect(() => {
-    loadUsersAction(1)
-      .then(users => setUsers(users));
-  }, []);
-
-  const nextPage = async () => {
-    currentPageRef.current ++;
+  const handleNextPage = async () => {
+    currentPageRef.current += 1;
     const users = await loadUsersAction(currentPageRef.current);
     if (users.length > 0) {
       setUsers(users);
     } else {
-      currentPageRef.current --;
+      currentPageRef.current -= 1;
+    }
+  };
+
+  const handlePreviousPage = async () => {
+    if (currentPageRef.current < 1) return;
+    currentPageRef.current -= 1;
+    const users = await loadUsersAction(currentPageRef.current);
+    if (users.length > 0) {
+      setUsers(users);
+    } else {
+      currentPageRef.current += 1;
     }
   }
 
-  const previusPage = async () => {
-    if (currentPageRef.current < 1) return;
-    currentPageRef.current --;
-    const users = await loadUsersAction(currentPageRef.current);
-    setUsers(users);
-  }
+  useEffect(() => {
+    loadUsersAction(1)
+      .then((users) => setUsers(users))
+      .catch((error) => {
+        console.error("Error al cargar los usuarios:", error);
+      });
+  }, []);
 
-  return {
-    users,
-    nextPage,
-    previusPage,
-  }
-}
+  return { users, handleNextPage, handlePreviousPage };
+};

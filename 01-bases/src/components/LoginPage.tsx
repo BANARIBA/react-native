@@ -1,28 +1,32 @@
-import { useAuthContext } from "../context/AuthContext"
+import { useAuthContext } from "../context/AuthContext";
 
-export const LoginPage = (): JSX.Element => {
-  const { isAuthenticated, loginwithemailpassword, user, logout } = useAuthContext();
+export const LoginPage = () => {
+  const { isChecking, isAuthenticated, user, handleLogin, handleLogout } = useAuthContext();
+
+  if (isChecking) return <p>Checking authentication status...</p>;
   return (
-    <div>
-      <h3>Login</h3>
-      {
-        isAuthenticated 
-          ? 
-            <>
-              <h1>Welcome: </h1>
-              <pre>
-                {
-                  JSON.stringify(user, null, 2)
-                }
-              </pre>
-              <button className="bg-blue-500 p-2 text-white rounded-xl mt-2" onClick={() => logout()}>Logout</button>
-            </>
-          :
-            <>
-              <h1>Sign in</h1>
-              <button className="bg-blue-500 p-2 text-white rounded-xl mt-2" onClick={() => loginwithemailpassword('gohan@gmail.com', 'asd.456')}>Logint</button>
-            </>
-      }
-    </div>
-  )
-}
+    <>
+      {isAuthenticated ? (
+        <>
+          <p>Bienvenido {user!.email}</p>
+          <button 
+            className="bg-blue-500 p-2 text-white rounded-xl mt-2"
+            onClick={handleLogout}
+          >
+            Salir
+          </button>
+        </>
+      ) : (
+        <>
+          <p>Ingresar a la aplicacion</p>
+          <button 
+            className="bg-blue-500 p-2 text-white rounded-xl mt-2"
+            onClick={() => handleLogin('goku@gmail.com', 'asd.456')}  
+          >
+            Entrar
+          </button>
+        </>
+      )}
+    </>
+  );
+};

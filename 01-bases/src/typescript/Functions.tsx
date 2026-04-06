@@ -1,12 +1,13 @@
-const addTwoNumbers = (numberOne: number, numberTwo: number): number => {
-  return numberOne + numberTwo;
-}
+export const Functions = () => {
 
-export const Functions = (): JSX.Element => {
+  const addTwoNumbers = (a: number, b: number): number => {
+    return a + b;
+  };
+
   return (
-    <>
-      <h3>Functions</h3>
-      <span>2 + 8 = {addTwoNumbers(2, 8)}</span>
-    </>
-  )
-}
+    <div>
+      <h3 className="font-bold">Funciones</h3>
+      <span>5 + 10 = {addTwoNumbers(5, 10)}</span>
+    </div>
+  );
+};
